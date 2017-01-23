@@ -15,7 +15,7 @@ import org.jnetpcap.packet.format.FormatUtils;
 import org.jnetpcap.protocol.network.Ip4;
 
 //import de.gtarc.sec.model.DatabaseHandler;
-
+// DENEME 1-2-3
 public class FlowCollector extends Thread {
 
 	private PcapIf device;
