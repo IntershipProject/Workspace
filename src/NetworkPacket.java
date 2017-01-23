@@ -11,6 +11,7 @@ import org.jnetpcap.PcapSockAddr;
 
 //deneme
 //arda
+//berk
 public class NetworkPacket {
 
 	private static String SourceIp;
