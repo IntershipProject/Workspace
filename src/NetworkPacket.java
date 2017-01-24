@@ -9,17 +9,16 @@ import org.jnetpcap.packet.PcapPacket;
 import org.jnetpcap.packet.format.FormatUtils;
 import org.jnetpcap.PcapSockAddr;
 
-//deneme
-//arda
-//berk
 public class NetworkPacket {
 
-	private static String SourceIp;
-	private static String SourcePort;
-	private static String TargetIp;
-	private static String TargetPort;
-
+	private static String sourceIP;
+	private static int sourcePort;
+	private static String destIP;
+	private static int destPort;
+	private static String description;
+	//DatabaseHandler hand = new DatabaseHandler();
 	public NetworkPacket(PcapPacket packet) {
+		
 		System.out.println(
 				"\n-------------------------------------------------------------------------------------------------------\n\n\n");
 		Ip4 ip = new Ip4();
@@ -27,9 +26,11 @@ public class NetworkPacket {
 		Udp udp = new Udp();
 		byte[] sIP = new byte[4];
 		byte[] dIP = new byte[4];
-		String sourceIP = "";
-		String destIP = "";
+		//String sourceIP = "";
+		//String destIP = "";
 		if (packet.hasHeader(ip)) {
+			description=ip.getDescription();
+			System.out.println("***********************\n    "+description+"\n***********************\n");
 			sIP = packet.getHeader(ip).source();
 			sourceIP = FormatUtils.ip(sIP);
 			dIP = packet.getHeader(ip).destination();
@@ -40,14 +41,14 @@ public class NetworkPacket {
 			System.out.println("Destination IP= " + destIP);
 			System.out.println();
 			if (packet.hasHeader(tcp)) {
-				FindSourcePortName(tcp.source(), "TCP");
+				findSourcePortName(tcp.source(), "TCP");
 				
-				FindDestinationPortName(tcp.destination(), "TCP");
+				findDestinationPortName(tcp.destination(), "TCP");
 			} else
 				System.out.println("No TCP Protocol......");
 			if (packet.hasHeader(udp)) {
-				FindSourcePortName(udp.source(), "UDP");
-				FindDestinationPortName(udp.destination(), "UDP");
+				findSourcePortName(udp.source(), "UDP");
+				findDestinationPortName(udp.destination(), "UDP");
 			} else
 				System.out.println("No UDP Protocol......");
 		} else
@@ -58,9 +59,9 @@ public class NetworkPacket {
 
 	}
 
-	private static void FindSourcePortName(int port, String name) {
+	private static void findSourcePortName(int port, String name) {
 		System.out.println("Source " + name + " number= " + port);
-
+		sourcePort=port;
 		if (port == 80) {
 			System.out.println("Source " + name + " protocol name=  HTTP ");
 		} else if (port == 23) {
@@ -86,8 +87,9 @@ public class NetworkPacket {
 		}
 	}
 
-	private static void FindDestinationPortName(int port, String name) {
+	private static void findDestinationPortName(int port, String name) {
 		System.out.println("Destination " + name + " number= " + port);
+		destPort=port;
 		if (port == 80) {
 			System.out.println("Destination " + name + " protocol name=  HTTP ");
 		} else if (port == 23) {
@@ -112,37 +114,47 @@ public class NetworkPacket {
 			System.out.println("Destination " + name + " protocol name= Unknown");
 		}
 	}
-
-	public static String getSourceIp() {
-		return SourceIp;
+	
+	/*public void DB(){
+		
+		hand.insertElement(sourceIP, destIP, description, sourcePort, destPort);
+	}
+	public void findinDB(){
+		hand.findElement(sourceIP);
+	}
+*/
+	public static String getSourceIP() {
+		return sourceIP;
 	}
 
-	public static void setSourceIp(String sourceIp) {
-		SourceIp = sourceIp;
+	public static void setSourceIP(String sourceIP) {
+		NetworkPacket.sourceIP = sourceIP;
 	}
 
-	public static String getSourcePort() {
-		return SourcePort;
+	public static int getSourcePort() {
+		return sourcePort;
 	}
 
-	public static void setSourcePort(String sourcePort) {
-		SourcePort = sourcePort;
+	public static void setSourcePort(int sourcePort) {
+		NetworkPacket.sourcePort = sourcePort;
 	}
 
-	public static String getTargetIp() {
-		return TargetIp;
+	public static String getDestIP() {
+		return destIP;
 	}
 
-	public static void setTargetIp(String targetIp) {
-		TargetIp = targetIp;
+	public static void setDestIP(String destIP) {
+		NetworkPacket.destIP = destIP;
 	}
 
-	public static String getTargetPort() {
-		return TargetPort;
+	public static int getDestPort() {
+		return destPort;
 	}
 
-	public static void setTargetPort(String targetPort) {
-		TargetPort = targetPort;
+	public static void setDestPort(int destPort) {
+		NetworkPacket.destPort = destPort;
 	}
+
+	
 
 }

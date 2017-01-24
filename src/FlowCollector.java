@@ -4,7 +4,6 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-// sadasdasdasdasd
 import org.jnetpcap.Pcap;
 import org.jnetpcap.PcapIf;
 import org.jnetpcap.nio.JBuffer;
@@ -14,8 +13,6 @@ import org.jnetpcap.packet.PcapPacket;
 import org.jnetpcap.packet.format.FormatUtils;
 import org.jnetpcap.protocol.network.Ip4;
 
-//import de.gtarc.sec.model.DatabaseHandler;
-// DENEME 1-2-3
 public class FlowCollector extends Thread {
 
 	private PcapIf device;
@@ -47,7 +44,6 @@ public class FlowCollector extends Thread {
 			FlowCollector nfc = new FlowCollector(nextDevice, errbuf);
 			devices[count - 1] = nfc;
 		}
-		System.out.println(count); 
 		for(int i = 0; i < count ; i++)
 		{
 			devices[i].start();
@@ -89,11 +85,13 @@ public class FlowCollector extends Thread {
 		JPacketHandler<String> jpacketHandler = new JPacketHandler<String>() {
 			public void nextPacket(JPacket packet, String user) {
 				NetworkPacket pack = new NetworkPacket((PcapPacket) packet);
+				//pack.DB();
+				//pack.findinDB();
 				Ip4 ip = new Ip4();
 				System.out.println(packet);
 				if (packet.hasHeader(ip))
 				{
-					System.out.println("Source IP = "+ FormatUtils.ip(ip.source()) + "Destionation IP = " + FormatUtils.ip(ip.destination()) + "Description =" +  ip.getDescription());
+					System.out.println("Source IP = "+ FormatUtils.ip(ip.source()) + " Destionation IP = " + FormatUtils.ip(ip.destination()) + " Description =" +  ip.getDescription());
 					String jsoncommand = "{\"sourceIP\" : \"" + FormatUtils.ip(ip.source()) + "\", \"destIP\" : \"" + FormatUtils.ip(ip.destination()) + "\", \"description\" : \"" + ip.getDescription() + "\"}";
 					//dH.insertElement(FormatUtils.ip(ip.source()), FormatUtils.ip(ip.destination()), ip.getDescription());
 				}
