@@ -53,7 +53,7 @@ public class FlowCollector extends Thread {
 	public void run() {
 		System.out.println((device.getDescription() != null) ? device
 				.getDescription() : device.getName());
-	//	DatabaseHandler dH = new DatabaseHandler();
+		//DatabaseHandler dH = new DatabaseHandler();
 		int snaplen = 64 * 1024; 
 		int flags = Pcap.MODE_PROMISCUOUS; 
 		int timeout = 10 * 1000; 
@@ -85,7 +85,7 @@ public class FlowCollector extends Thread {
 		JPacketHandler<String> jpacketHandler = new JPacketHandler<String>() {
 			public void nextPacket(JPacket packet, String user) {
 				NetworkPacket pack = new NetworkPacket((PcapPacket) packet);
-				//pack.DB();
+				pack.DB();
 				//pack.findinDB();
 				Ip4 ip = new Ip4();
 				System.out.println(packet);

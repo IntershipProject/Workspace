@@ -17,7 +17,7 @@ public class NetworkPacket {
 	private static int destPort;
 	private static String description;
 
-	// DatabaseHandler hand = new DatabaseHandler();
+	DatabaseHandler hand = new DatabaseHandler();
 	public NetworkPacket(PcapPacket packet) {
 
 		System.out.println(
@@ -96,12 +96,12 @@ public class NetworkPacket {
 		}
 	}
 
-	/*
-	 * public void DB(){
-	 * 
-	 * hand.insertElement(sourceIP, destIP, description, sourcePort, destPort);
-	 * } public void findinDB(){ hand.findElement(sourceIP); }
-	 */
+	
+	  public void DB(){
+	  
+	  hand.insertElement(sourceIP, destIP, description, sourcePort, destPort);
+	  } public void findinDB(){ hand.findElement(sourceIP); }
+	 
 	public static String getSourceIP() {
 		return sourceIP;
 	}
